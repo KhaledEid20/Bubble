@@ -1,22 +1,46 @@
-<section class=" bg-amber-600 p-1 h-screen">
+<section class="bg-amber-600 p-1 min-h-dvh lg:h-dvh">
     <div
-        class="grid grid-flow-col grid-cols-2 gap-4 bg-[#E5E3E6] h-full rounded-xl">
-        <div class="left flex items-center justify-center">
+        class="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 gap-4 bg-[#E5E3E6] rounded-xl
+                min-h-[calc(100dvh-0.5rem)] lg:min-h-0 lg:h-full lg:overflow-hidden">
+
+        <div
+            class="left hidden lg:flex items-center justify-center p-4 min-h-0 min-w-0">
             <div
-                class="image-holder max-w-2xl aspect-square overflow-hidden rounded-2xl w-full ">
+                class="image-holder max-w-2xl overflow-hidden rounded-2xl">
                 <img class="size-full object-cover"
                     src="/Images/AuthHeroImage2.jpg"
                     alt="heroImage">
             </div>
         </div>
-        <div class="right flex flex-col items-center justify-center gap-2">
-            <div>
-                <h1 class="text-7xl font-bold text-amber-600">BUBBLE</h1>
-                <p class="mb-0 font-semibold">Stay In Touch</p>
-            </div>
-            <div class="router">
-                <router-outlet></router-outlet>
+
+        <div
+            class="right flex flex-col min-w-0 px-4 py-6 lg:min-h-0 lg:overflow-y-auto">
+            <div class="my-auto w-full flex flex-col items-center gap-4">
+                <div class="text-center">
+                    <h1
+                        class="text-4xl sm:text-5xl lg:text-6xl font-bold text-amber-600">BUBBLE</h1>
+                    <p class="mb-0 font-semibold">Stay In Touch</p>
+                </div>
+                <div class="router w-full flex flex-col">
+                    <router-outlet></router-outlet>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+@if(SuccessFlag){
+<div
+    class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-max max-w-[90vw] p-4 text-sm text-fg-success-strong rounded-base bg-success-soft shadow-lg"
+    role="alert">
+    <span class="font-medium">Success alert!</span> Account Created
+    Successfully.
+</div>
+}
+@if(FailedFlag){
+<div
+    class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-max max-w-[90vw] p-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft shadow-lg"
+    role="alert">
+    <span class="font-medium">Failed alert!</span> Registration Failed!!
+</div>
+}

@@ -1,1 +1,61 @@
-<p>login works!</p>
+@let form = loginForm;
+<form
+    class="mx-auto w-full max-w-md space-y-5 rounded-2xl bg-white p-5 shadow-xl sm:p-6"
+    [formGroup]="loginForm" (ngSubmit)="submit()">
+
+    <header>
+        <h1 class="text-xl font-bold text-gray-900">Take The Step</h1>
+        <p class="mt-0.5 text-sm text-gray-500">Fill in the details below to get
+            started.</p>
+    </header>
+
+    <div class="grid grid-cols-1 gap-x-4 gap-y-1 sm:grid-cols-1">
+
+        <div class="flex flex-col">
+            <div>
+                <label for="email" class="form-label">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email"
+                    placeholder="you@example.com" required
+                    class="form-input peer"
+                    formControlName="email"
+                    [class]="form.get('email')?.invalid && form.get('email')?.touched ? 'border-red-500' : 'border-slate-200'" />
+            </div>
+            @if(form.get('email')?.invalid && form.get('email')?.touched){
+            @if(form.get('email')?.hasError('required')){
+            <span class="block form-error">Enter a valid email address.</span>
+            }
+            }
+        </div>
+
+        <div class="flex flex-col">
+            <div>
+                <label for="password" class="form-label">Password</label>
+                <input id="password" name="password" type="password"
+                    autocomplete="new-password"
+                    placeholder="Create a password" required
+                    class="form-input peer"
+                    formControlName="password"
+                    [class]="form.get('password')?.invalid && form.get('password')?.touched ? 'border-red-500' : 'border-slate-200'" />
+            </div>
+            @if(form.get('password')?.invalid && form.get('password')?.touched){
+            @if(form.get('password')?.hasError('required')){
+            <span class="block form-error">Min 8 characters with uppercase,
+                lowercase, a
+                number, and a symbol.</span>
+            }
+            }
+        </div>
+
+    </div>
+
+    <button type="submit"
+        class="w-full rounded-lg bg-amber-600 px-5 py-2.5 font-semibold text-white transition
+                hover:bg-amber-700
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600
+                cursor-pointer disabled:opacity-60">
+        LogIn
+    </button>
+</form>
+<p class="text-center mt-3">you don't have an account? <span
+        class="underline text-amber-600 font-bold cursor-pointer"
+        (click)="goToRegister()">Register</span></p>

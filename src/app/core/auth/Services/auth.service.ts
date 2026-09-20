@@ -12,4 +12,7 @@ export class AuthService {
   register(data : object) : Observable<UserData> {
     return this.httpclient.post<UserData>("https://route-posts.routemisr.com/users/signup" , data)
   }
+  login(data : object){
+    return this.httpclient.post<UserData>("https://route-posts.routemisr.com/users/signin" , data)
+  }
 }

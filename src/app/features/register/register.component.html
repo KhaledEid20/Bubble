@@ -1,6 +1,6 @@
 @let form = registerForm;
 <form
-    class="w-full max-w-2xl space-y-5 rounded-2xl bg-white p-5 shadow-xl sm:p-6"
+    class="mx-auto w-full max-w-md space-y-4 rounded-2xl bg-white p-4 shadow-xl sm:space-y-5 sm:p-6"
     [formGroup]="registerForm" (ngSubmit)="submit()">
 
     <header>
@@ -9,20 +9,19 @@
             started.</p>
     </header>
 
-    <div class="grid grid-cols-1 gap-x-4 gap-y-1 sm:grid-cols-2">
+    <div class="grid grid-cols-2 gap-x-4 gap-y-1">
 
-        <div class="flex flex-col">
+        <div class="flex flex-col min-w-0 col-span-2 sm:col-span-1">
             <div>
                 <label for="name" class="form-label">Full name</label>
                 <input id="name" name="name" type="text" autocomplete="name"
                     placeholder="Your full name" required minlength="3"
-                    class="form-input"
+                    class="form-input w-full min-w-0"
                     formControlName="name"
                     [class]="form.get('name')?.invalid && form.get('name')?.touched ? 'border-red-500' : 'border-slate-200'" />
             </div>
             @if(form.get('name')?.invalid && form.get('name')?.touched){
             @if(form.get('name')?.hasError('required')){
-
             <span class="form-error">Name is
                 required (at
                 least 3
@@ -31,13 +30,13 @@
             }
         </div>
 
-        <div class="flex flex-col">
+        <div class="flex flex-col min-w-0 col-span-2 sm:col-span-1">
             <div>
                 <label for="username" class="form-label">Username</label>
                 <input id="username" name="username" type="text"
                     autocomplete="username"
                     placeholder="Choose a username" required pattern="\w{3,}"
-                    class="form-input peer"
+                    class="form-input peer w-full min-w-0"
                     formControlName="username"
                     [class]="form.get('username')?.invalid && form.get('username')?.touched ? 'border-red-500' : 'border-slate-200'" />
             </div>
@@ -48,12 +47,12 @@
             }
         </div>
 
-        <div class="flex flex-col sm:col-span-2">
+        <div class="flex flex-col min-w-0 col-span-2">
             <div>
                 <label for="email" class="form-label">Email</label>
                 <input id="email" name="email" type="email" autocomplete="email"
                     placeholder="you@example.com" required
-                    class="form-input peer"
+                    class="form-input peer w-full min-w-0"
                     formControlName="email"
                     [class]="form.get('email')?.invalid && form.get('email')?.touched ? 'border-red-500' : 'border-slate-200'" />
             </div>
@@ -64,13 +63,13 @@
             }
         </div>
 
-        <div class="flex flex-col">
+        <div class="flex flex-col min-w-0 col-span-2 min-[420px]:col-span-1">
             <div>
                 <label for="dateOfBirth" class="form-label">Date of
                     birth</label>
                 <input id="dateOfBirth" name="dateOfBirth" type="date"
                     autocomplete="bday" required
-                    class="form-input peer"
+                    class="form-input peer w-full min-w-0"
                     formControlName="dateOfBirth"
                     [class]="form.get('dateOfBirth')?.invalid && form.get('dateOfBirth')?.touched ? 'border-red-500' : 'border-slate-200'" />
             </div>
@@ -82,11 +81,11 @@
             }
         </div>
 
-        <div class="flex flex-col">
+        <div class="flex flex-col min-w-0 col-span-2 min-[420px]:col-span-1">
             <div>
                 <label for="gender" class="form-label">Gender</label>
                 <select id="gender" name="gender" required
-                    class="form-input peer"
+                    class="form-input peer w-full min-w-0"
                     formControlName="gender"
                     [class]="form.get('gender')?.invalid && form.get('gender')?.touched ? 'border-red-500' : 'border-slate-200'">
                     <option value disabled selected>Select gender</option>
@@ -101,13 +100,13 @@
             }
         </div>
 
-        <div class="flex flex-col">
+        <div class="flex flex-col min-w-0 col-span-2 sm:col-span-1">
             <div>
                 <label for="password" class="form-label">Password</label>
                 <input id="password" name="password" type="password"
                     autocomplete="new-password"
                     placeholder="Create a password" required
-                    class="form-input peer"
+                    class="form-input peer w-full min-w-0"
                     formControlName="password"
                     [class]="form.get('password')?.invalid && form.get('password')?.touched ? 'border-red-500' : 'border-slate-200'" />
             </div>
@@ -120,14 +119,14 @@
             }
         </div>
 
-        <div class="flex flex-col">
+        <div class="flex flex-col min-w-0 col-span-2 sm:col-span-1">
             <div>
                 <label for="rePassword" class="form-label">Confirm
                     password</label>
                 <input id="rePassword" name="rePassword" type="password"
                     autocomplete="new-password"
                     placeholder="Repeat your password" required
-                    class="form-input peer"
+                    class="form-input peer w-full min-w-0"
                     formControlName="rePassword"
                     [class]="form.get('rePassword')?.invalid && form.get('rePassword')?.touched ? 'border-red-500' : 'border-slate-200'" />
             </div>
@@ -151,19 +150,3 @@
 <p class="text-center mt-3">you already have an account? <span
         class="underline text-amber-600 font-bold cursor-pointer"
         (click)="goToLogin()">LOGIN</span></p>
-
-@if(successFlag){
-<div
-    class="fixed bottom-4 left-1/2 -translate-x-1/2 p-4 text-sm text-fg-success-strong rounded-base bg-success-soft shadow-lg"
-    role="alert">
-    <span class="font-medium">Success alert!</span> Account Created
-    Successfully.
-</div>
-}
-@if(failedFlag){
-<div
-    class="fixed bottom-4 left-1/2 -translate-x-1/2 p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft shadow-lg"
-    role="alert">
-    <span class="font-medium">Failed alert!</span> Registration Failed!!
-</div>
-}
