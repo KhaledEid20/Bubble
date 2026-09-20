@@ -1,1 +1,169 @@
-<p>register works!</p>
+@let form = registerForm;
+<form
+    class="w-full max-w-2xl space-y-5 rounded-2xl bg-white p-5 shadow-xl sm:p-6"
+    [formGroup]="registerForm" (ngSubmit)="submit()">
+
+    <header>
+        <h1 class="text-xl font-bold text-gray-900">Take The Step</h1>
+        <p class="mt-0.5 text-sm text-gray-500">Fill in the details below to get
+            started.</p>
+    </header>
+
+    <div class="grid grid-cols-1 gap-x-4 gap-y-1 sm:grid-cols-2">
+
+        <div class="flex flex-col">
+            <div>
+                <label for="name" class="form-label">Full name</label>
+                <input id="name" name="name" type="text" autocomplete="name"
+                    placeholder="Your full name" required minlength="3"
+                    class="form-input"
+                    formControlName="name"
+                    [class]="form.get('name')?.invalid && form.get('name')?.touched ? 'border-red-500' : 'border-slate-200'" />
+            </div>
+            @if(form.get('name')?.invalid && form.get('name')?.touched){
+            @if(form.get('name')?.hasError('required')){
+
+            <span class="form-error">Name is
+                required (at
+                least 3
+                characters).</span>
+            }
+            }
+        </div>
+
+        <div class="flex flex-col">
+            <div>
+                <label for="username" class="form-label">Username</label>
+                <input id="username" name="username" type="text"
+                    autocomplete="username"
+                    placeholder="Choose a username" required pattern="\w{3,}"
+                    class="form-input peer"
+                    formControlName="username"
+                    [class]="form.get('username')?.invalid && form.get('username')?.touched ? 'border-red-500' : 'border-slate-200'" />
+            </div>
+            @if(form.get('username')?.invalid && form.get('username')?.touched){
+            <span class="block form-error">Use 3+ characters: letters, numbers,
+                or
+                underscores.</span>
+            }
+        </div>
+
+        <div class="flex flex-col sm:col-span-2">
+            <div>
+                <label for="email" class="form-label">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email"
+                    placeholder="you@example.com" required
+                    class="form-input peer"
+                    formControlName="email"
+                    [class]="form.get('email')?.invalid && form.get('email')?.touched ? 'border-red-500' : 'border-slate-200'" />
+            </div>
+            @if(form.get('email')?.invalid && form.get('email')?.touched){
+            @if(form.get('email')?.hasError('required')){
+            <span class="block form-error">Enter a valid email address.</span>
+            }
+            }
+        </div>
+
+        <div class="flex flex-col">
+            <div>
+                <label for="dateOfBirth" class="form-label">Date of
+                    birth</label>
+                <input id="dateOfBirth" name="dateOfBirth" type="date"
+                    autocomplete="bday" required
+                    class="form-input peer"
+                    formControlName="dateOfBirth"
+                    [class]="form.get('dateOfBirth')?.invalid && form.get('dateOfBirth')?.touched ? 'border-red-500' : 'border-slate-200'" />
+            </div>
+            @if(form.get('dateOfBirth')?.invalid &&
+            form.get('dateOfBirth')?.touched){
+            @if(form.get('dateOfBirth')?.hasError('required')){
+            <span class="block form-error">Date of birth is required.</span>
+            }
+            }
+        </div>
+
+        <div class="flex flex-col">
+            <div>
+                <label for="gender" class="form-label">Gender</label>
+                <select id="gender" name="gender" required
+                    class="form-input peer"
+                    formControlName="gender"
+                    [class]="form.get('gender')?.invalid && form.get('gender')?.touched ? 'border-red-500' : 'border-slate-200'">
+                    <option value disabled selected>Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            @if(form.get('gender')?.invalid && form.get('gender')?.touched){
+            @if(form.get('gender')?.hasError('required')){
+            <span class="block form-error">Please select a gender.</span>
+            }
+            }
+        </div>
+
+        <div class="flex flex-col">
+            <div>
+                <label for="password" class="form-label">Password</label>
+                <input id="password" name="password" type="password"
+                    autocomplete="new-password"
+                    placeholder="Create a password" required
+                    class="form-input peer"
+                    formControlName="password"
+                    [class]="form.get('password')?.invalid && form.get('password')?.touched ? 'border-red-500' : 'border-slate-200'" />
+            </div>
+            @if(form.get('password')?.invalid && form.get('password')?.touched){
+            @if(form.get('password')?.hasError('required')){
+            <span class="block form-error">Min 8 characters with uppercase,
+                lowercase, a
+                number, and a symbol.</span>
+            }
+            }
+        </div>
+
+        <div class="flex flex-col">
+            <div>
+                <label for="rePassword" class="form-label">Confirm
+                    password</label>
+                <input id="rePassword" name="rePassword" type="password"
+                    autocomplete="new-password"
+                    placeholder="Repeat your password" required
+                    class="form-input peer"
+                    formControlName="rePassword"
+                    [class]="form.get('rePassword')?.invalid && form.get('rePassword')?.touched ? 'border-red-500' : 'border-slate-200'" />
+            </div>
+            @if(form.get('rePassword')?.invalid &&
+            form.get('rePassword')?.touched){
+            @if(form.get('rePassword')?.hasError('required')){
+            <span class="block form-error">Please confirm your password.</span>
+            }
+            }
+        </div>
+    </div>
+
+    <button type="submit"
+        class="w-full rounded-lg bg-amber-600 px-5 py-2.5 font-semibold text-white transition
+                hover:bg-amber-700
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600
+                cursor-pointer disabled:opacity-60">
+        Create an account
+    </button>
+</form>
+<p class="text-center mt-3">you already have an account? <span
+        class="underline text-amber-600 font-bold cursor-pointer"
+        (click)="goToLogin()">LOGIN</span></p>
+
+@if(successFlag){
+<div
+    class="fixed bottom-4 left-1/2 -translate-x-1/2 p-4 text-sm text-fg-success-strong rounded-base bg-success-soft shadow-lg"
+    role="alert">
+    <span class="font-medium">Success alert!</span> Account Created
+    Successfully.
+</div>
+}
+@if(failedFlag){
+<div
+    class="fixed bottom-4 left-1/2 -translate-x-1/2 p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft shadow-lg"
+    role="alert">
+    <span class="font-medium">Failed alert!</span> Registration Failed!!
+</div>
+}

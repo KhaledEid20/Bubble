@@ -1,1 +1,22 @@
-<router-outlet></router-outlet>
+<section class=" bg-amber-600 p-1 h-screen">
+    <div
+        class="grid grid-flow-col grid-cols-2 gap-4 bg-[#E5E3E6] h-full rounded-xl">
+        <div class="left flex items-center justify-center">
+            <div
+                class="image-holder max-w-2xl aspect-square overflow-hidden rounded-2xl w-full ">
+                <img class="size-full object-cover"
+                    src="/Images/AuthHeroImage2.jpg"
+                    alt="heroImage">
+            </div>
+        </div>
+        <div class="right flex flex-col items-center justify-center gap-2">
+            <div>
+                <h1 class="text-7xl font-bold text-amber-600">BUBBLE</h1>
+                <p class="mb-0 font-semibold">Stay In Touch</p>
+            </div>
+            <div class="router">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</section>

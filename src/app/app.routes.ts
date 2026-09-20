@@ -8,7 +8,7 @@ import { FeedComponent } from './features/feed/feed.component';
 import { ProfileComponent } from './features/profile/profile.component';
 
 export const routes: Routes = [
-    {path:"" , component:LoginComponent},
+    {path:"" , component:AuthComponent},
     { path: 'auth', component: AuthComponent ,
         children : [
             {path : "login" , component:LoginComponent},
