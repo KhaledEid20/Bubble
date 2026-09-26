@@ -112,10 +112,11 @@
             </div>
             @if(form.get('password')?.invalid && form.get('password')?.touched){
             @if(form.get('password')?.hasError('required')){
-            <span class="block form-error">Min 8 characters with uppercase,
+            <span class="block form-error">- The Password is required</span>
+            }
+            <span class="block form-error">- Min 8 characters with uppercase,
                 lowercase, a
                 number, and a symbol.</span>
-            }
             }
         </div>
 
@@ -130,13 +131,16 @@
                     formControlName="rePassword"
                     [class]="form.get('rePassword')?.invalid && form.get('rePassword')?.touched ? 'border-red-500' : 'border-slate-200'" />
             </div>
-            @if(form.get('rePassword')?.invalid &&
-            form.get('rePassword')?.touched){
-            @if(form.get('rePassword')?.hasError('required')){
-            <span class="block form-error">Please confirm your password.</span>
+            @if(form.get("rePassword")?.hasError("required")&&
+            form.get("rePassword")?.touched){
+            <span class="block form-error">confirming the password is
+                required</span>
             }
+            @if(form.get("rePassword")?.hasError("mismatch")){
+            <span class="block form-error">- the password is not matching</span>
             }
         </div>
+
     </div>
 
     <button type="submit"

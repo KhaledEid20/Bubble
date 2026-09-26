@@ -6,10 +6,12 @@ import { ForgotPasswordComponent } from './features/forgot-password/forgot-passw
 import { MainComponent } from './layout/main/main.component';
 import { FeedComponent } from './features/feed/feed.component';
 import { ProfileComponent } from './features/profile/profile.component';
+import { authGuard } from './core/auth/guards/auth-guard-guard';
+import { guestGuard } from './core/auth/guards/guest-guard';
 
 export const routes: Routes = [
     {path:"" , component:AuthComponent},
-    { path: 'auth', component: AuthComponent ,
+    { path: 'auth', component: AuthComponent , canActivate :[guestGuard],
         children : [
             {path : "login" , component:LoginComponent},
             {path : "register" , component:RegisterComponent},
@@ -17,7 +19,7 @@ export const routes: Routes = [
         ],
         title:"Bubble Authentication"
     },
-    {path:"main" , component:MainComponent, title:"BUBBLE",
+    {path:"main" , component:MainComponent, title:"BUBBLE", canActivate:[authGuard],
         children:[
             {path : "feed" , component:FeedComponent},
             {path : "profile" , component:ProfileComponent},
