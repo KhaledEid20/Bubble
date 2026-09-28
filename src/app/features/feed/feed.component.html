@@ -1,1 +1,6 @@
-<p>feed works!</p>
+<section class="mx-auto pt-20 grid lg:grid-cols-[25%_1fr] grid-cols-1 gap-3">
+    <app-aside [class.hidden]="!displayAside()" class="fixed inset-y-15 inset-s-0 z-50 w-64 bg-white shadow-lg lg:static lg:z-auto lg:block lg:w-auto lg:shadow-none"></app-aside>
+    <div>
+        <app-posts></app-posts>
+    </div>
+</section>

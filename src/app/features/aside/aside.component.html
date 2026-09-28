@@ -1,0 +1,73 @@
+<aside>
+    <div class="flex flex-col p-3 m-auto gap-3 ">
+        <button class="flex items-center gap-3 w-full p-2 rounded-xl font-bold cursor-pointer bg-[#f7f7f7] text-black">
+            <i class="fa-solid fa-newspaper text-amber-600"></i>
+            <p class="mb-0 text-20">Feed</p>
+        </button>
+        <button class="flex items-center gap-3 w-full p-2 rounded-xl font-bold cursor-pointer bg-[#f7f7f7] text-black">
+            <i class="fa-solid fa-wand-magic-sparkles text-amber-600"></i>
+            <p class="mb-0 text-20">My Posts</p>
+        </button>
+        <button class="flex items-center gap-3 w-full p-2 rounded-xl font-bold cursor-pointer bg-[#f7f7f7] text-black">
+            <i class="fa-solid fa-newspaper text-amber-600"></i>
+            <p class="mb-0 text-20">Community</p>
+        </button>
+        <button class="flex items-center gap-3 w-full p-2 rounded-xl font-bold cursor-pointer bg-[#f7f7f7] text-black">
+            <i class="fa-solid fa-newspaper text-amber-600"></i>
+            <p class="mb-0 text-20">Saved</p>
+        </button>
+    </div>
+    <div class="suggested-friends p-2 m-auto rounded-xl bg-[#f7f7f7]">
+        <div class="flex flex-col w-full p-3 m-auto gap-3">
+            <div class="head rounded-xl flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-users text-amber-600"></i>
+                    <p class="font-bold text-20 mb-0">Suggested Friends</p>
+                </div>
+                <span class="flex items-center justify-center w-6 h-6 rounded-full bg-amber-600 text-white text-xs font-bold">
+                    5
+                </span>
+            </div>
+            <div class="search">
+                <form class="w-full">   
+                    <label for="search" class="block mb-2.5 text-sm font-medium text-heading sr-only ">Search</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 inset-e-2 flex items-center ps-3 pointer-events-none inset-s-0 z-3">
+                            <i class="fa-solid fa-magnifying-glass w-4 h-4 text-amber-500"></i>
+                        </div>
+                        <input type="search" id="search" class="block w-full p-3 ps-9 bg-neutral-secondary-medium border text-sm rounded-base outline-none focus:border-amber-600 focus:ring-1 focus:ring-amber-600" placeholder="Search"/>
+                        <button type="button" class="absolute inset-e-1.5 bottom-1.5 text-white bg-amber-600 hover:bg-amber-600 font-medium leading-5 rounded text-xs px-3 py-1.5 focus:outline-none cursor-pointer">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="friends-list mb-2">
+                <div class="friend bg-white rounded-xl p-2 shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="image-holder w-12.5">
+                                <img class="w-full object-contain" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="">
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-16">Khaled Eid</h2>
+                                <p class="mb-0 text-5 text-heading">@userName</p>
+                            </div>
+                        </div>
+                        <button type="button" class="flex items-center justify-center rounded-full bg-amber-600 text-white text-xs font-bold p-1 md:p-2 lg:p-3 gap-2 cursor-pointer">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span>Follow</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-3 w-fit mx-auto">
+                        <span class="flex rounded-full justify-center font-bold text-xs p-1.5 bg-[#dfdfdf] gap-2"><strong>3</strong>followers</span>
+
+                        <span class="flex rounded-full justify-center font-bold text-xs p-1.5 bg-amber-600 text-white gap-2"><strong>3</strong>matual</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-5 border-t border-[#dfdfdf] bg-white w-full">
+                <span class="font-bold text-20 mx-auto w-fit block cursor-pointer">View More</span>
+            </div>
+        </div>
+    </div>
+</aside>

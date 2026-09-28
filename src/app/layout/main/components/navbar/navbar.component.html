@@ -1,0 +1,44 @@
+<nav class="bg-neutral-primary fixed w-full z-90 top-0 inset-s-0 border-b border-default">
+  <div class="relative flex flex-wrap items-center justify-between mx-auto p-4">
+    <div class="flex items-center space-x-3">
+        <button (click)="toggleSidebar()" class="lg:hidden cursor-pointer">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <a class="flex items-center space-x-3 rtl:space-x-reverse">
+            <span class="self-center text-amber-600 text-xl font-bold whitespace-nowrap" >BUBBLE</span>
+        </a>
+    </div>
+    <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+        <button type="button" class="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+            <span class="sr-only">Open user menu</span>
+            <img #profilePhoto class="w-8 h-8 rounded-full" (click)="profileInfo()" [src]="UserData.photo" alt="user photo">
+        </button>
+        <!-- Dropdown menu -->
+        <div class="z-50 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44 cursor-pointer"
+            [class.hidden]="!profileClicked"
+            [class.absolute]="profileClicked"
+            [class.top-15]="profileClicked"
+            [class.right-10]="profileClicked"
+        id="user-dropdown">
+            <div class="px-4 py-3 text-sm border-b border-default">
+            <span class="block text-heading font-medium">{{UserData.username}}</span>
+            <span class="block text-body truncate">{{UserData.email}}</span>
+            </div>
+            <ul class="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
+            <li>
+                <a class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Dashboard</a>
+            </li>
+            <li>
+                <a class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Settings</a>
+            </li>
+            <li>
+                <a class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Earnings</a>
+            </li>
+            <li>
+                <a (click)="signOut()" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Sign out</a>
+            </li>
+            </ul>
+        </div>
+    </div>
+  </div>
+</nav>
