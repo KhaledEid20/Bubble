@@ -8,9 +8,12 @@ import { FeedComponent } from './features/feed/feed.component';
 import { ProfileComponent } from './features/profile/profile.component';
 import { authGuard } from './core/auth/guards/auth-guard-guard';
 import { guestGuard } from './core/auth/guards/guest-guard';
+import { PostDetailComponent } from './features/posts/components/post-detail/post-detail.component';
+import { NotFoundComponent } from './features/not-found/not-found.component';
 
 export const routes: Routes = [
     {path:"" , component:AuthComponent},
+    {path:"NotFound" , component:NotFoundComponent},
     { path: 'auth', component: AuthComponent , canActivate :[guestGuard],
         children : [
             {path : "login" , component:LoginComponent},
@@ -22,7 +25,8 @@ export const routes: Routes = [
     {path:"main" , component:MainComponent, title:"BUBBLE", canActivate:[authGuard],
         children:[
             {path : "feed" , component:FeedComponent},
-            {path : "profile" , component:ProfileComponent},
+            {path : "profile/:id" , component:ProfileComponent},
+            {path : "details/:id" , component:PostDetailComponent}
         ]
-    }
+    },
 ];

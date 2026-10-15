@@ -68,10 +68,6 @@ export class RegisterComponent implements OnInit{
           localStorage.setItem('userData' , JSON.stringify(res.data.user))
           this.router.navigate(['/main/feed'])
         },
-        error: (err)=>{
-          console.log('Data can not be sent' , err);
-          this.registrationStatus.setStatus({ success: false, failed: true });
-        }
       })
     }
   }

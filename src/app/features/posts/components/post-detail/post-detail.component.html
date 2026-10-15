@@ -1,0 +1,119 @@
+<div class="container space-y-4 mx-auto py-20">
+
+    <button type="button"
+            (click)="goBack()"
+            class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:bg-amber-50 hover:text-amber-700 border border-gray-200 hover:border-amber-300 active:scale-95 transition-all duration-200 cursor-pointer"
+            aria-label="Go back">
+        <i class="fa-solid fa-arrow-left text-xs" aria-hidden="true"></i>
+        <span>Back</span>
+    </button>
+
+    <article class="bg-neutral-primary-soft w-full p-4 border border-default rounded-base mt-4 shadow-sm hover:shadow-md transition-shadow duration-200">
+            <div class="head flex items-center gap-3 border-b border-[#dfdfdf] pb-3">
+                <div class="image-holder shrink-0">
+                    <img class="size-12 rounded-full object-cover ring-2 ring-amber-600/20"
+                        [src]="article.user.photo"
+                        alt="profile picture">
+                </div>
+                <div class="flex flex-col min-w-0">
+                    <h2 class="font-bold text-base leading-tight truncate">{{article.user.name}}</h2>
+                    <div class="info flex items-center gap-2 text-sm text-[#767676]">
+                        <p class="mb-0 truncate">@{{article.user.username}}</p>
+                        <span aria-hidden="true">·</span>
+                        <span>{{CreationDate}}</span> <!--feature to handle-->
+                    </div>
+                </div>
+
+                <div class="relative ml-auto shrink-0">
+                    <button type="button"
+                            class="flex items-center justify-center size-9 rounded-full text-gray-600 cursor-pointer hover:bg-amber-50 hover:text-amber-700 focus-visible:outline-2 focus-visible:outline-amber-600 active:scale-95 transition"
+                            aria-label="Post options"
+                            aria-haspopup="menu"
+                            (click)="PostOptionToggler($event)">
+                        <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
+                    </button>
+                    @if (menuOptions) {
+                        <div role="menu"
+                            aria-label="Post options"
+                            class="absolute right-0 top-full mt-2 w-44 z-20 rounded-xl border border-gray-200 bg-white py-1 shadow-lg">
+                            <button type="button" role="menuitem"
+                                    class="flex w-full items-center gap-3 px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-amber-50 hover:text-amber-700 focus-visible:bg-amber-50 focus-visible:outline-none"
+                                    >
+                                <i class="fa-regular fa-bookmark w-4 text-center" aria-hidden="true"></i>
+                                Save Post
+                            </button>
+    
+                            <button type="button" role="menuitem"
+                                    class="flex w-full items-center gap-3 px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-amber-50 hover:text-amber-700 focus-visible:bg-amber-50 focus-visible:outline-none"
+                                    >
+                                <i class="fa-regular fa-pen-to-square w-4 text-center" aria-hidden="true"></i>
+                                Edit Post
+                            </button>
+    
+                            <button type="button" role="menuitem" (click)="RemovePost(article._id , $event)"
+                                    class="flex w-full items-center gap-3 px-4 py-2 text-sm text-red-600 cursor-pointer hover:bg-red-50 focus-visible:bg-red-50 focus-visible:outline-none"
+                                    >
+                                <i class="fa-regular fa-trash-can w-4 text-center" aria-hidden="true"></i>
+                                Delete Post
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="content py-4 flex flex-col gap-3">
+                @if (article.body) {
+                    <p class="text-[15px] sm:text-base leading-relaxed text-gray-800 whitespace-pre-line wrap-break-word">{{ article.body }}</p>
+                }
+                @if (article.image) {
+                    <div class="overflow-hidden rounded-xl border border-[#dfdfdf] bg-[#f7f7f7]">
+                        <img [src]="article.image"
+                            [alt]="'Image posted by ' + article.user.name"
+                            loading="lazy"
+                            class="w-full max-h-125 object-contain transition-transform duration-300 hover:scale-[1.02]">
+                    </div>
+                }
+            </div>
+    
+            <div class="reviews flex flex-wrap items-center justify-between gap-2 py-2 text-sm text-[#767676]">
+                <div class="reacts flex items-center gap-2">
+                    <div class="icon flex items-center justify-center bg-amber-600 size-6 rounded-lg">
+                        <i class="fa-solid fa-up-long text-white text-xs" aria-hidden="true"></i>
+                    </div>
+                    <span class="block">0</span>
+                </div>
+                <div class="reviews-stats flex items-center gap-3">
+                    <span class="block cursor-pointer hover:text-amber-700 hover:underline underline-offset-2 transition-colors"><strong class="text-gray-800">0</strong> Shares</span>
+                    <span #CommentBtn class="block cursor-pointer hover:text-amber-700 hover:underline underline-offset-2 transition-colors"><strong class="text-gray-800">{{article.commentsCount}}</strong> Comments</span>
+                </div>
+            </div>
+
+            <div class="react border-t border-[#dfdfdf] pt-2">
+                <ul class="flex items-center justify-between gap-1 w-full">
+                    <li class="flex-1">
+                        <button type="button" class="w-full flex items-center justify-center gap-2 py-2 rounded-lg cursor-pointer font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-700 focus-visible:outline-2 focus-visible:outline-amber-600 active:scale-95 transition">
+                            <span class="icon flex items-center justify-center bg-amber-600 size-6 rounded-lg">
+                                <i class="fa-solid fa-up-long text-white text-xs" aria-hidden="true"></i>
+                            </span>
+                            <span>Like</span>
+                        </button>
+                    </li>
+                    <li class="flex-1">
+                        <button #CommentBtn type="button" class="w-full flex items-center justify-center gap-2 py-2 rounded-lg cursor-pointer font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-700 focus-visible:outline-2 focus-visible:outline-amber-600 active:scale-95 transition">
+                            <i class="fa-solid fa-comments text-amber-600" aria-hidden="true"></i>
+                            <span>Comment</span>
+                        </button>
+                    </li>
+                    <li class="flex-1">
+                        <button type="button" class="w-full flex items-center justify-center gap-2 py-2 rounded-lg cursor-pointer font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-700 focus-visible:outline-2 focus-visible:outline-amber-600 active:scale-95 transition">
+                            <i class="fa-solid fa-share text-amber-600" aria-hidden="true"></i>
+                            <span>Share</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </article>
+            @defer (on interaction(CommentBtn) ) {
+                <app-post-comments [postId]="article._id" [PostCreatorID]="article.user._id"></app-post-comments>
+        }
+</div>

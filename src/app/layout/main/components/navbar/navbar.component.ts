@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../../core/auth/Services/auth.service';
 import { AsideTogglerService } from '../../../../core/Services/aside-toggler.service';
 
@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   authService = inject(AuthService);
   toggler:boolean = false;
   togglerService = inject(AsideTogglerService);
+  router = inject(Router)
   ngOnInit(): void {
     this.UserData = this.parseUserData();
     console.log("user Data : ", this.UserData);
@@ -40,8 +41,11 @@ export class NavbarComponent implements OnInit {
       this.profileClicked = false;
     }
   }
-  signOut():void{
+  signOut(e : PointerEvent):void{
+    e.preventDefault();
     this.authService.signOut();
+    this.router.navigate(["/auth/login"])
+    
   }
   toggleSidebar() {
     this.toggler = !this.toggler;

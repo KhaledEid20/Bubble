@@ -1,50 +1,175 @@
-<main class="w-full md:w-full">
-    <div class="bg-neutral-primary-soft block w-full p-3 border border-default rounded-base mt-4 shadow-lg">
-        <div class="head flex items-center gap-3 border-b border-[#dfdfdf] pb-2">
-            <div class="image-holder w-12.5">
-                <img class="w-full object-contain" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="">
-            </div>
-            <div class="flex flex-col w-fit">
-                <h2 class="font-bold mb-0 text-16">Khaled Eid</h2>
-                <div class="info flex items-center gap-2">
-                    <p class="mb-0 text-6">@userName</p>
-                    <span>12h</span>
+<main class="w-full">
+    <section class="bg-neutral-primary-soft w-full p-4 border border-default rounded-base shadow-sm hover:shadow-md transition-shadow duration-200">
+        <form #formelement (submit)="submitForm($event , formelement)">
+            <div class="flex items-start gap-3">
+                <div class="image-holder shrink-0 pt-0.5">
+                    <img class="size-11 sm:size-12 rounded-full object-cover ring-2 ring-amber-600/20"
+                        [src]="userInfo.photo"
+                        alt="User profile picture">
+                </div>
+                <div class="flex-1 min-w-0">
+                    <textarea rows="2"
+                            [formControl]="contentData"
+                            class="w-full bg-[#f7f7f7] hover:bg-[#efefef] focus:bg-white text-gray-800 placeholder:text-gray-400 text-sm sm:text-base rounded-2xl px-4 py-2.5 border border-transparent focus:border-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-600/20 transition-all resize-none leading-relaxed"
+                            placeholder="What's on your mind? Share your thoughts..."></textarea>
                 </div>
             </div>
-        </div>
-        <div class="content py-4 mb-2 border-b border-[#dfdfdf]">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, veniam?</p>
-        </div>
-        <div class="reviews flex items-center justify-between mb-2">
-            <div class="reacts flex items-center gap-2">
-                <div class="icon flex items-center justify-center bg-amber-600 w-6 h-6 rounded-lg">
-                    <i class="fa-solid fa-up-long text-white"></i>
+    
+            <div class="relative mt-3 rounded-xl overflow-hidden border border-default bg-black/5 max-h-80 flex items-center justify-center">
+                @if(imgURL){
+                    <img [src]="imgURL" alt="Selected media preview" class="w-full max-h-80 object-cover rounded-xl" />
+                }
+                <button type="button"
+                        (click)="removePhoto()"
+                        class="absolute top-2 right-2 size-8 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition cursor-pointer active:scale-95"
+                        aria-label="Remove image">
+                    <i class="fa-solid fa-xmark text-sm" aria-hidden="true"></i>
+                </button>
+            </div>
+    
+            <div class="border-t border-[#dfdfdf] mt-3 pt-3 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-1 sm:gap-2 flex-wrap">
+                    <label class="flex items-center gap-2 px-3 py-2 rounded-xl font-medium text-xs sm:text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-700 cursor-pointer active:scale-95 transition-all">
+                        <i class="fa-solid fa-image text-amber-500 text-base" aria-hidden="true"></i>
+                        <span>Photo / Video</span>
+                        <input type="file" accept="image/*" class="hidden" (change)="changeFile($event)">
+                    </label>
+    
+                    <div class="relative">
+                <label for="post-privacy" class="sr-only">Post visibility</label>
+                <select id="post-privacy"
+                        [formControl]="PrivacyContorol"
+                        class="appearance-none cursor-pointer h-8 pl-7 pr-6 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-600/20 font-semibold text-xs text-amber-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-600/30 focus:border-amber-600 active:scale-95 transition-all">
+                    <option value="public" selected>Public</option>
+                    <option value="following">Follwing</option>
+                    <option value="only_me">Private</option>
+                </select>
+            </div>
                 </div>
-                <span class="block text-[#767676]">0</span>
+                <div class="ml-auto">
+                    <button type="submit"
+                            class="flex items-center justify-center gap-2 px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 active:scale-95 text-white font-bold text-sm cursor-pointer shadow-sm hover:shadow transition-all focus-visible:outline-2 focus-visible:outline-amber-600">
+                        <i class="fa-solid fa-paper-plane text-xs" aria-hidden="true"></i>
+                        <span>Post</span>
+                    </button>
+                </div>
             </div>
-            <div class="reviews-stats flex items-center gap-2">
-                <span class="block"><strong>0</strong> Shares</span>
-                <span class="block"><strong>0</strong> Comments</span>
-                <a class="block text-amber-600 cursor-pointer font-bold">View Details</a>
-            </div>
-        </div>
-        <div class="react p-4 border-t border-[#dfdfdf]">
-            <ul class="flex items-center gap-4 w-full justify-between">
-                <li class="flex items-center gap-2 cursor-pointer">
-                    <div class="icon flex items-center justify-center bg-amber-600 w-6 h-6 rounded-lg">
-                        <i class="fa-solid fa-up-long text-white"></i>
+        </form>
+    </section>
+    @for(article of postsData ; track article._id){
+
+        <article class="bg-neutral-primary-soft w-full p-4 border border-default rounded-base mt-4 shadow-sm hover:shadow-md transition-shadow duration-200">
+            <div class="head flex items-center gap-3 border-b border-[#dfdfdf] pb-3">
+                <div class="image-holder shrink-0" routerLink="/main/profile/{{article.user._id}}">
+                    <img class="size-12 rounded-full object-cover ring-2 ring-amber-600/20"
+                        [src]="article.user.photo"
+                        alt="profile picture">
+                </div>
+                <div class="flex flex-col min-w-0">
+                    <h2 routerLink="/main/profile/{{article.user._id}}" class="cursor-pointer font-bold text-base leading-tight truncate">{{article.user.name}}</h2>
+                    <div class="info flex items-center gap-2 text-sm text-[#767676]">
+                        <p class="mb-0 truncate">@{{article.user.username}}</p>
+                        <span aria-hidden="true">·</span>
+                        <span>{{timeAgo(article.createdAt)}}</span> <!--feature to handle-->
                     </div>
-                    <span>Like</span>
-                </li>
-                <li class="flex items-center gap-2 cursor-pointer">
-                    <i class="fa-solid fa-comments text-amber-600"></i>
-                    <span>Comment</span>
-                </li>
-                <li class="flex items-center gap-2 cursor-pointer">
-                    <i class="fa-solid fa-share text-amber-600"></i>
-                    <span>Share</span>
-                </li>
-            </ul>
-        </div>
-    </div>
+                </div>
+    
+    
+                <div class="relative ml-auto shrink-0">
+                    <button type="button"
+                            class="flex items-center justify-center size-9 rounded-full text-gray-600 cursor-pointer hover:bg-amber-50 hover:text-amber-700 focus-visible:outline-2 focus-visible:outline-amber-600 active:scale-95 transition"
+                            aria-label="Post options"
+                            aria-haspopup="menu"
+                            (click)="PostOptionToggler(article._id , $event)">
+                        <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
+                    </button>
+                    @if (openMenuId === article._id) {
+                        <div role="menu"
+                            aria-label="Post options"
+                            class="absolute right-0 top-full mt-2 w-44 z-20 rounded-xl border border-gray-200 bg-white py-1 shadow-lg">
+                            <button type="button" role="menuitem"
+                                    class="flex w-full items-center gap-3 px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-amber-50 hover:text-amber-700 focus-visible:bg-amber-50 focus-visible:outline-none"
+                                    >
+                                <i class="fa-regular fa-bookmark w-4 text-center" aria-hidden="true"></i>
+                                Save Post
+                            </button>
+    
+                            <button type="button" role="menuitem"
+                                    class="flex w-full items-center gap-3 px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-amber-50 hover:text-amber-700 focus-visible:bg-amber-50 focus-visible:outline-none"
+                                    >
+                                <i class="fa-regular fa-pen-to-square w-4 text-center" aria-hidden="true"></i>
+                                Edit Post
+                            </button>
+    
+                            <button type="button" role="menuitem" (click)="RemovePost(article._id , $event)"
+                                    class="flex w-full items-center gap-3 px-4 py-2 text-sm text-red-600 cursor-pointer hover:bg-red-50 focus-visible:bg-red-50 focus-visible:outline-none"
+                                    >
+                                <i class="fa-regular fa-trash-can w-4 text-center" aria-hidden="true"></i>
+                                Delete Post
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+    
+            <div class="content py-4 flex flex-col gap-3">
+                @if (article.body) {
+                    <p class="text-[15px] sm:text-base leading-relaxed text-gray-800 whitespace-pre-line wrap-break-word">{{ article.body }}</p>
+                }
+                @if (article.image) {
+                    <div class="overflow-hidden rounded-xl border border-[#dfdfdf] bg-[#f7f7f7]">
+                        <img [src]="article.image"
+                            [alt]="'Image posted by ' + article.user.name"
+                            loading="lazy"
+                            class="w-full max-h-125 object-cover transition-transform duration-300 hover:scale-[1.02]">
+                    </div>
+                }
+            </div>
+    
+            <div class="reviews flex flex-wrap items-center justify-between gap-2 py-2 text-sm text-[#767676]">
+                <div class="reacts flex items-center gap-2">
+                    <div class="icon flex items-center justify-center bg-amber-600 size-6 rounded-lg">
+                        <i class="fa-solid fa-up-long text-white text-xs" aria-hidden="true"></i>
+                    </div>
+                    <span class="block">0</span>
+                </div>
+                <div class="reviews-stats flex items-center gap-3">
+                    <span class="block cursor-pointer hover:text-amber-700 hover:underline underline-offset-2 transition-colors"><strong class="text-gray-800">0</strong> Shares</span>
+                    <span #CommentBtn class="block cursor-pointer hover:text-amber-700 hover:underline underline-offset-2 transition-colors"><strong class="text-gray-800">{{article.commentsCount}}</strong> Comments</span>
+                    <a class="block cursor-pointer font-bold text-amber-600 underline underline-offset-2 transition-colors" routerLink="/main/details/{{ article._id }}">View Details</a>
+                </div>
+            </div>
+
+            <div class="react border-t border-[#dfdfdf] pt-2">
+                <ul class="flex items-center justify-between gap-1 w-full">
+                    <li class="flex-1">
+                        <button type="button" class="w-full flex items-center justify-center gap-2 py-2 rounded-lg cursor-pointer font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-700 focus-visible:outline-2 focus-visible:outline-amber-600 active:scale-95 transition">
+                            <span class="icon flex items-center justify-center bg-amber-600 size-6 rounded-lg">
+                                <i class="fa-solid fa-up-long text-white text-xs" aria-hidden="true"></i>
+                            </span>
+                            <span>Like</span>
+                        </button>
+                    </li>
+                    <li class="flex-1">
+                        <button #CommentBtn type="button" class="w-full flex items-center justify-center gap-2 py-2 rounded-lg cursor-pointer font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-700 focus-visible:outline-2 focus-visible:outline-amber-600 active:scale-95 transition">
+                            <i class="fa-solid fa-comments text-amber-600" aria-hidden="true"></i>
+                            <span>Comment</span>
+                        </button>
+                    </li>
+                    <li class="flex-1">
+                        <button type="button" class="w-full flex items-center justify-center gap-2 py-2 rounded-lg cursor-pointer font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-700 focus-visible:outline-2 focus-visible:outline-amber-600 active:scale-95 transition">
+                            <i class="fa-solid fa-share text-amber-600" aria-hidden="true"></i>
+                            <span>Share</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </article>
+        <!-- comments -->
+        <!-- @if (openMenuId === article._id){ -->
+            @defer (on interaction(CommentBtn) ) {
+                <app-post-comments [postId]="article._id" [PostCreatorID]="article.user._id"></app-post-comments>
+            <!-- } -->
+        }
+    }
 </main>

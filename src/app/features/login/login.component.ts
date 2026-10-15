@@ -48,10 +48,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('userData' , JSON.stringify(res.data.user))
             this.router.navigate(['/main/feed'])
         },
-          error:()=>{
-            console.log('there is an error')
-            
-          }
+
         }
       )
     }

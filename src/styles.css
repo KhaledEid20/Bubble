@@ -2,8 +2,7 @@
 @import "flowbite/src/themes/default";
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
-
-
+/* @import "./node_modules/ngx-spinner/animations/ball-scale-multiple.css"; */
 @theme {
 
 }
@@ -11,6 +10,7 @@
 @utility container{
     margin-inline:auto;
 }
+
 @layer components {
     .form-input {
         @apply w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900

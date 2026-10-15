@@ -2,7 +2,10 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChang
 import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { loadingScreenInterceptor } from './core/interceptor/Loading/loading-screen-interceptor';
+import { headingInterceptor } from './core/interceptor/Heading/heading-interceptor';
+import { errorsInterceptor } from './core/interceptor/Errors/errors-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +18,6 @@ export const appConfig: ApplicationConfig = {
         skipInitialTransition:true,
       })
     ),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch(), withInterceptors([loadingScreenInterceptor, headingInterceptor , errorsInterceptor]))
   ]
 };
