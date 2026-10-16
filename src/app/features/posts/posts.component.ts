@@ -70,6 +70,16 @@ export class PostsComponent implements OnInit {
     });
   }
 
+  likeAndUnlike(article : any , e:PointerEvent){
+    e.preventDefault()
+    this.postService.LikeAndUnlikePosts(article._id).subscribe({
+      next:(res)=>{
+        article.likes = res.data.post.likes
+        article.likesCount = res.data.likesCount
+      }
+    })
+  }
+
   changeFile(e:Event):void{
     const inputElement = e.target as HTMLInputElement
     if(inputElement.files){
@@ -153,5 +163,14 @@ export class PostsComponent implements OnInit {
     if (days < 365) return `${months}mo`;
 
     return `${Math.floor(days / 365)}y`;
+  }
+
+  reactState(arr : string[]){
+    if(arr.includes(this.userInfo._id)){
+      return true
+    }
+    else{
+      return false;
+    }
   }
 }

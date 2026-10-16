@@ -131,7 +131,7 @@
                     <div class="icon flex items-center justify-center bg-amber-600 size-6 rounded-lg">
                         <i class="fa-solid fa-up-long text-white text-xs" aria-hidden="true"></i>
                     </div>
-                    <span class="block">0</span>
+                    <span class="block">{{article.likesCount}}</span>
                 </div>
                 <div class="reviews-stats flex items-center gap-3">
                     <span class="block cursor-pointer hover:text-amber-700 hover:underline underline-offset-2 transition-colors"><strong class="text-gray-800">0</strong> Shares</span>
@@ -143,10 +143,17 @@
             <div class="react border-t border-[#dfdfdf] pt-2">
                 <ul class="flex items-center justify-between gap-1 w-full">
                     <li class="flex-1">
-                        <button type="button" class="w-full flex items-center justify-center gap-2 py-2 rounded-lg cursor-pointer font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-700 focus-visible:outline-2 focus-visible:outline-amber-600 active:scale-95 transition">
-                            <span class="icon flex items-center justify-center bg-amber-600 size-6 rounded-lg">
-                                <i class="fa-solid fa-up-long text-white text-xs" aria-hidden="true"></i>
-                            </span>
+                        <button type="button" (click)="likeAndUnlike(article , $event)" class="w-full flex items-center justify-center ga-2 py-2 rounded-lg cursor-pointer font-medium text-gray-700 hover:bg-amber-50 hover:text-amber-700 focus-visible:outline-2 focus-visible:outline-amber-600 active:scale-95 transition gap-2">
+                            @if(reactState(article.likes)){
+                                <span class="icon flex items-center justify-center bg-amber-600 size-6 rounded-lg">
+                                    <i class="fa-solid fa-up-long text-white text-xs" aria-hidden="true"></i>
+                                </span>
+                            }
+                            @else {
+                                <span class="icon flex items-center justify-center bg-white size-6 rounded-lg">
+                                    <i class="fa-solid fa-up-long text-amber-600 text-xs" aria-hidden="true"></i>
+                                </span>
+                            }
                             <span>Like</span>
                         </button>
                     </li>

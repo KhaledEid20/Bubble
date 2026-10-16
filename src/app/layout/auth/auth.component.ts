@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { RegisterationStatusService } from '../../core/auth/Services/registeration-status.service';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
-  imports: [RouterOutlet],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
 })

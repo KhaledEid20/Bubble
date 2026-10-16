@@ -21,8 +21,27 @@
                         class="text-4xl sm:text-5xl lg:text-6xl font-bold text-amber-600">BUBBLE</h1>
                     <p class="mr-auto font-semibold">Stay In Touch</p>
                 </div>
-                <div class="router w-full flex flex-col">
-                    <router-outlet></router-outlet>
+                <div class="w-full max-w-md mx-auto flex flex-col gap-4">
+                    <!-- Auth Switcher Tabs -->
+                    <div class="grid grid-cols-2 gap-2 p-1.5 bg-white/80 backdrop-blur-sm border border-gray-200/90 rounded-2xl shadow-sm">
+                        <a routerLink="/auth/login"
+                            routerLinkActive="!bg-amber-600 !text-white shadow-md font-bold"
+                            class="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold text-gray-600 hover:text-amber-700 hover:bg-white/80 active:scale-[0.98] transition-all duration-200 cursor-pointer">
+                            <i class="fa-solid fa-right-to-bracket text-xs" aria-hidden="true"></i>
+                            <span>LOGIN</span>
+                        </a>
+                        <a routerLink="/auth/register"
+                            routerLinkActive="!bg-amber-600 !text-white shadow-md font-bold"
+                            class="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold text-gray-600 hover:text-amber-700 hover:bg-white/80 active:scale-[0.98] transition-all duration-200 cursor-pointer">
+                            <i class="fa-solid fa-user-plus text-xs" aria-hidden="true"></i>
+                            <span>Register</span>
+                        </a>
+                    </div>
+
+                    <!-- Router Outlet for Child Forms -->
+                    <div class="router w-full flex flex-col">
+                        <router-outlet></router-outlet>
+                    </div>
                 </div>
             </div>
         </div>
