@@ -1,44 +1,129 @@
-<nav class="bg-neutral-primary fixed w-full z-90 top-0 inset-s-0 border-b border-default">
+<nav class="bg-neutral-primary fixed w-full z-50 top-0 inset-x-0 border-b border-default">
   <div class="relative flex flex-wrap items-center justify-between mx-auto p-4">
-    <div class="flex items-center space-x-3">
-        <button (click)="toggleSidebar()" class="lg:hidden cursor-pointer">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <a class="flex items-center space-x-3 rtl:space-x-reverse">
-            <span class="self-center text-amber-600 text-xl font-bold whitespace-nowrap" >BUBBLE</span>
-        </a>
+    <!-- Left Section: Sidebar toggle & Logo -->
+    <div class="flex items-center space-x-3 rtl:space-x-reverse">
+      <button
+        type="button"
+        (click)="toggleSidebar($event)"
+        data-aside-toggle
+        aria-label="Toggle navigation sidebar"
+        class="lg:hidden p-2 text-heading hover:text-amber-600 hover:bg-neutral-tertiary-medium rounded-lg transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
+      >
+        <i class="fa-solid fa-bars text-lg"></i>
+      </button>
+
+      <a
+        routerLink="/main/feed"
+        class="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer group"
+      >
+        <span class="self-center text-amber-600 text-xl font-bold whitespace-nowrap group-hover:opacity-90 transition-opacity">
+          BUBBLE
+        </span>
+      </a>
     </div>
-    <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-        <button type="button" class="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-            <span class="sr-only">Open user menu</span>
-            <img #profilePhoto class="w-8 h-8 rounded-full" (click)="profileInfo()" [src]="UserData.photo" alt="user photo">
-        </button>
-        <!-- Dropdown menu -->
-        <div class="z-50 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44 cursor-pointer"
-            [class.hidden]="!profileClicked"
-            [class.absolute]="profileClicked"
-            [class.top-15]="profileClicked"
-            [class.right-10]="profileClicked"
-        id="user-dropdown">
-            <div class="px-4 py-3 text-sm border-b border-default">
-            <span class="block text-heading font-medium">{{UserData.username}}</span>
-            <span class="block text-body truncate">{{UserData.email}}</span>
-            </div>
-            <ul class="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
-            <li>
-                <a routerLink="/main/profile/{{UserData._id}}" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Profile</a>
-            </li>
-            <li>
-                <a class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Settings</a>
-            </li>
-            <li>
-                <a class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Earnings</a>
-            </li>
-            <li>
-                <a (click)="signOut($event)" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Sign out</a>
-            </li>
-            </ul>
+
+    <!-- Right Section: User Menu & Dropdown -->
+    <div class="relative flex items-center md:order-2 space-x-2 sm:space-x-3 rtl:space-x-reverse" #userDropdownContainer>
+      <!-- Notification Trigger Button -->
+      <button
+        type="button"
+        (click)="toggleNotifications($event)"
+        aria-label="Open notifications"
+        title="Notifications"
+        class="relative flex items-center justify-center size-9 rounded-full text-heading hover:text-amber-600 hover:bg-neutral-tertiary-medium transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
+      >
+        <i class="fa-regular fa-bell text-lg" aria-hidden="true"></i>
+        <!-- Unread badge indicator -->
+        <span class="absolute top-1.5 right-1.5 flex size-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full size-2 bg-amber-600"></span>
+        </span>
+      </button>
+
+      <button
+        type="button"
+        (click)="toggleProfileDropdown($event)"
+        class="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary transition cursor-pointer"
+        id="user-menu-button"
+        [attr.aria-expanded]="profileClicked"
+        aria-haspopup="true"
+        aria-label="Open user menu"
+      >
+        <span class="sr-only">Open user menu</span>
+        <img
+          #profilePhoto
+          class="w-8 h-8 rounded-full object-cover border border-default shadow-xs"
+          [src]="UserData?.photo || fallbackAvatar"
+          (error)="onPhotoError($event)"
+          [alt]="(UserData?.username || 'User') + ' photo'"
+        >
+      </button>
+
+      <!-- Dropdown menu -->
+      <div
+        class="absolute right-0 top-full mt-2.5 z-50 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-52 overflow-hidden transition-all duration-150"
+        [class.hidden]="!profileClicked"
+        id="user-dropdown"
+        role="menu"
+        aria-orientation="vertical"
+        aria-labelledby="user-menu-button"
+      >
+        <!-- User Info Header -->
+        <div class="px-4 py-3 text-sm border-b border-default bg-neutral-primary">
+          <span class="block text-heading font-medium truncate">
+            {{ UserData?.username || UserData?.name || 'User' }}
+          </span>
+          <span class="block text-body text-xs truncate text-neutral-500">
+            {{ UserData?.email || 'No email' }}
+          </span>
         </div>
+
+        <!-- Menu Navigation Items -->
+        <ul class="p-2 text-sm text-body font-medium space-y-1" aria-labelledby="user-menu-button">
+          <li>
+            <a
+              [routerLink]="['/main/profile', UserData?._id]"
+              (click)="closeDropdown()"
+              class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded transition-colors cursor-pointer"
+              role="menuitem"
+            >
+              <i class="fa-regular fa-user me-2.5 text-neutral-400 w-4 text-center"></i>
+              <span>Profile</span>
+            </a>
+          </li>
+          <li>
+            <a
+              (click)="closeDropdown()"
+              class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded transition-colors cursor-pointer"
+              role="menuitem"
+            >
+              <i class="fa-solid fa-gear me-2.5 text-neutral-400 w-4 text-center"></i>
+              <span>Settings</span>
+            </a>
+          </li>
+          <li>
+            <a
+              (click)="closeDropdown()"
+              class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded transition-colors cursor-pointer"
+              role="menuitem"
+            >
+              <i class="fa-solid fa-wallet me-2.5 text-neutral-400 w-4 text-center"></i>
+              <span>Earnings</span>
+            </a>
+          </li>
+          <li class="pt-1 mt-1 border-t border-default">
+            <button
+              type="button"
+              (click)="signOut($event)"
+              class="inline-flex items-center w-full p-2 text-red-600 hover:bg-neutral-tertiary-medium rounded transition-colors cursor-pointer text-left"
+              role="menuitem"
+            >
+              <i class="fa-solid fa-arrow-right-from-bracket me-2.5 text-red-500 w-4 text-center"></i>
+              <span>Sign out</span>
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>

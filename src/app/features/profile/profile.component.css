@@ -1,0 +1,6 @@
+.followed{
+    background-color : #CCCCCC;
+    color: black;
+    transition-duration: 600ms;
+    transition-timing-function: ease;
+}

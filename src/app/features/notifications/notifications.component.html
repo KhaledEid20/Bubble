@@ -1,1 +1,103 @@
-<p>notifications works!</p>
+@if (notificationService.isOpen()) {
+  <!-- Overlay: Blurs the background with opacity and handles backdrop click to close -->
+  <div
+    class="fixed inset-0 z-[60] flex items-center justify-center bg-black/45 backdrop-blur-md p-3 sm:p-5 transition-opacity duration-300"
+    (click)="onBackdropClick($event)"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="notifications-title"
+  >
+    <!-- Modal: 60% width on large screens, 90% on small screens -->
+    <div
+      class="animate-modal-in relative flex h-[85vh] lg:h-[75vh] w-[90%] lg:w-[60%] flex-col rounded-3xl bg-white shadow-2xl border border-gray-100/90 overflow-hidden"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- Ambient Top Accent Gradient -->
+      <div class="h-1.5 w-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600"></div>
+
+      <!-- Header -->
+      <div class="flex items-center justify-between border-b border-gray-100 px-5 sm:px-7 py-4 bg-white/95 backdrop-blur-xs">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center size-10 rounded-2xl bg-amber-50 text-amber-600 border border-amber-100 shadow-xs">
+            <i class="fa-solid fa-bell text-base" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 id="notifications-title" class="text-lg sm:text-xl font-extrabold text-gray-900 tracking-tight">
+                Notifications
+              </h2>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">
+                {{limit}} New
+              </span>
+            </div>
+            <p class="text-xs text-gray-500 hidden sm:block">Stay updated with your community activities</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Close Button -->
+          <button
+            type="button"
+            (click)="close()"
+            aria-label="Close notifications"
+            class="flex items-center justify-center size-9 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 active:scale-95 transition-all cursor-pointer"
+          >
+            <i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Tabs Bar (Visual / Aesthetic) -->
+      <div class="flex items-center gap-2 px-5 sm:px-7 py-2.5 border-b border-gray-100 bg-[#fdfdfd] overflow-x-auto no-scrollbar">
+        <button
+          type="button"
+          class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-600 text-white shadow-xs cursor-pointer active:scale-95 transition-all"
+        >
+          All
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto px-4 sm:px-7 py-3 space-y-2.5 divide-y divide-gray-50">
+        @for(notify of notificationData ; track notify._id){
+          <!-- /////////////////////////////////////////////////////////////////////////////////// -->
+          <div class="group relative flex items-start gap-3.5 p-3 sm:p-3.5 rounded-2xl bg-amber-50/40 hover:bg-amber-50/80 border border-amber-100/60 transition-all cursor-pointer">
+            <div class="relative shrink-0 pt-0.5">
+              <img
+                [src]="notify.actor.photo"
+                [alt]="notify.actor.name"
+                class="size-11 rounded-full object-cover ring-2 ring-white shadow-xs"
+              />
+              <span class="absolute -bottom-1 -right-1 flex items-center justify-center size-5 rounded-full bg-amber-600 text-white text-[10px] shadow-xs">
+                <i class="fa-solid fa-heart" aria-hidden="true"></i>
+              </span>
+            </div>
+  
+            <div class="flex-1 min-w-0">
+              <p class="text-xs sm:text-sm text-gray-800 leading-snug">
+                <strong class="font-bold text-gray-900 hover:underline">{{notify.actor.name}}</strong> {{notify.type}}
+                <span class="italic text-gray-600">"Exploring modern web architecture with Angular..."</span>
+              </p>
+              <span class="text-[11px] font-medium text-amber-700/80 mt-1 block">5 minutes ago</span>
+            </div>
+  
+            <span class="size-2 rounded-full bg-amber-600 shrink-0 self-center"></span>
+          </div>
+          <!-- /////////////////////////////////////////////////////////////////////////////////// -->
+        }
+      </div>
+
+      <!-- Footer -->
+      <div class="flex items-center justify-between border-t border-gray-100 px-5 sm:px-7 py-3 bg-[#fafafa] text-xs text-gray-500">
+        <span class="font-medium">Showing recent notifications</span>
+        <button
+          type="button"
+          (click)="close()"
+          class="font-bold text-amber-600 hover:text-amber-700 hover:underline cursor-pointer"
+        >
+          Dismiss
+        </button>
+      </div>
+
+  </div>
+  </div>
+}

@@ -27,4 +27,7 @@ export class PostsService {
   LikeAndUnlikePosts(postId : string):Observable<LikesResponse>{
     return this.httpClient.put<LikesResponse>(`${environment.baseurl}/posts/${postId}/like`,{});
   }
+  BookmarkUnbookMark(postId: string):Observable<any>{
+    return this.httpClient.put<any>(`${environment.baseurl}/posts/${postId}/bookmark`,{})
+  }
 }

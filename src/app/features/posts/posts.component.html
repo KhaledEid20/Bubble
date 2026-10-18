@@ -134,6 +134,18 @@
                     <span class="block">{{article.likesCount}}</span>
                 </div>
                 <div class="reviews-stats flex items-center gap-3">
+                    @if(article.bookmarked){
+                        <button type="button"
+                        (click)="BookmarkUnbookMark(article)">
+                            <i class="fa-notdog-duo fa-solid fa-bookmark cursor-pointer text-yellow-500"></i>
+                        </button>
+                    }
+                    @else {
+                        <button type="button"
+                        (click)="BookmarkUnbookMark(article)">
+                            <i class="fa-notdog-duo fa-solid fa-bookmark cursor-pointer"></i>
+                        </button>
+                    }
                     <span class="block cursor-pointer hover:text-amber-700 hover:underline underline-offset-2 transition-colors"><strong class="text-gray-800">0</strong> Shares</span>
                     <span #CommentBtn class="block cursor-pointer hover:text-amber-700 hover:underline underline-offset-2 transition-colors"><strong class="text-gray-800">{{article.commentsCount}}</strong> Comments</span>
                     <a class="block cursor-pointer font-bold text-amber-600 underline underline-offset-2 transition-colors" routerLink="/main/details/{{ article._id }}">View Details</a>

@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { ProfileResponse } from '../../features/profile/Models/profile-response.interface';
 import { ProfilePostsResponse } from '../../features/profile/Models/profile-posts.interface';
 import { BookMarksResponse } from '../../features/profile/Models/book-marks-response.interface';
+import { MyProfileResponse } from '../models/my-profile.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +17,8 @@ export class ProfileService {
     return this.httpClient.get<ProfileResponse>(`${environment.baseurl}/users/profile-data`);
   }
 
-  getUserProfile(id:string):Observable<any>{
-    return this.httpClient.get<any>(`${environment.baseurl}/users/${id}/profile`);
+  getUserProfile(id:string):Observable<MyProfileResponse>{
+    return this.httpClient.get<MyProfileResponse>(`${environment.baseurl}/users/${id}/profile`);
   }
 
   getAllUserPosts(id : string):Observable<ProfilePostsResponse>{

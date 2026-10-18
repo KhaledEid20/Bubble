@@ -52,10 +52,32 @@
     
               <!-- Action Buttons -->
               <div class="flex items-center flex-wrap gap-2.5 sm:mb-2">
+                @if(userInfo._id != UserId){
+                  @if(isFollowed){
+                  <button
+                    #FollwedBtn
+                    (click)="FollowOrUnfollow(UserId)"
+                    type="button"
+                    class="flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold shadow-sm hover:shadow-md active:scale-95 transition-all cursor-pointer">
+                    <i class="fa-solid fa-check text-xs" aria-hidden="true"></i>
+                    <span>Followed</span>
+                  </button>
+                  }
+                  @else{
+                    <button
+                      type="button"
+                      (click)="FollowOrUnfollow(UserId)"
+                      class="flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-white bg-amber-600 hover:bg-amber-700 shadow-sm hover:shadow-md active:scale-95 transition-all cursor-pointer">
+                      <i class="fa-solid fa-pen-to-square text-xs" aria-hidden="true"></i>
+                      <span>Follow</span>
+                    </button>
+                  }
+                }
+
                 <button
                   type="button"
                   class="flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-white bg-amber-600 hover:bg-amber-700 shadow-sm hover:shadow-md active:scale-95 transition-all cursor-pointer">
-                  <i class="fa-solid fa-pen-to-square text-xs" aria-hidden="true"></i>
+                  <i class="fa-solid fa-user-plus text-xs" aria-hidden="true"></i>
                   <span>Edit Profile</span>
                 </button>
     
@@ -203,7 +225,7 @@
                 [class]="activateTab === 'bookmarks'
                   ? 'bg-amber-100 text-amber-700'
                   : 'bg-gray-100 text-gray-600'">
-                0
+                {{BookmarksData.bookmarks.length}}
               </span>
             </button>
 
@@ -427,7 +449,7 @@
               }
             }
             @else {
-            @for (article of BookmarksData.bookmarks; track article._id) {
+            @for (article of BookmarksData?.bookmarks; track article._id) {
               <article class="bg-neutral-primary-soft w-full p-4 border border-default rounded-base mt-4 shadow-sm hover:shadow-md transition-shadow duration-200">
                             <div class="head flex items-center gap-3 border-b border-[#dfdfdf] pb-3">
                                 <div class="image-holder shrink-0">
@@ -504,6 +526,18 @@
                                     <span class="block">0</span>
                                 </div>
                                 <div class="reviews-stats flex items-center gap-3">
+                                    @if(article.bookmarked){
+                                        <button type="button"
+                                        (click)="BookmarkUnbookMark(article)">
+                                            <i class="fa-notdog-duo fa-solid fa-bookmark cursor-pointer text-yellow-500"></i>
+                                        </button>
+                                    }
+                                    @else {
+                                        <button type="button"
+                                        (click)="BookmarkUnbookMark(article)">
+                                            <i class="fa-notdog-duo fa-solid fa-bookmark cursor-pointer"></i>
+                                        </button>
+                                    }
                                     <span class="block cursor-pointer hover:text-amber-700 hover:underline underline-offset-2 transition-colors"><strong class="text-gray-800">0</strong> Shares</span>
                                     <span #CommentBtn class="block cursor-pointer hover:text-amber-700 hover:underline underline-offset-2 transition-colors"><strong class="text-gray-800">{{article.commentsCount}}</strong> Comments</span>
                                     <a class="block cursor-pointer font-bold text-amber-600 underline underline-offset-2 transition-colors" routerLink="/main/details/{{ article._id }}">View Details</a>

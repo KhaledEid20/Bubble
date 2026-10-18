@@ -19,6 +19,7 @@ export class PostsComponent implements OnInit {
   ImageInput! : File;
   imgURL!:string | ArrayBuffer | null | undefined;
   openMenuId: string | null = null;
+  
 
   // content control
   contentData = new FormControl('')
@@ -68,6 +69,14 @@ export class PostsComponent implements OnInit {
         console.log("the Posts data here",this.postsData)
       },
     });
+  }
+
+  BookmarkUnbookMark(post: Post){
+    this.postService.BookmarkUnbookMark(post._id).subscribe({
+      next:(res)=>{
+        post.bookmarked = res.data.bookmarked
+      }
+    })
   }
 
   likeAndUnlike(article : any , e:PointerEvent){
@@ -173,4 +182,5 @@ export class PostsComponent implements OnInit {
       return false;
     }
   }
+
 }

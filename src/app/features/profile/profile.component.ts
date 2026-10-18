@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, OnInit, ViewChild } from '@angular/core';
 import { ProfileService } from '../../core/Services/profile.service';
 import {  ProfileUserData } from './Models/profile-response.interface';
 import { DatePipe } from '@angular/common';
@@ -7,6 +7,9 @@ import { UserPostsData } from './Models/profile-posts.interface';
 import { PostsService } from '../../core/Services/posts.service';
 import { PostCommentsComponent } from '../feed/components/post-comments/post-comments.component';
 import { BookMarksData } from './Models/book-marks-response.interface';
+import { AsideService } from '../../layout/main/components/aside/Services/aside.service';
+import {Post} from '../../core/models/posts-data.interface';
+import { UserProfile } from '../../core/models/my-profile.interface';
 
 @Component({
   selector: 'app-profile',
@@ -20,8 +23,11 @@ export class ProfileComponent implements OnInit{
   private readonly postService = inject(PostsService);
   router = inject(Router)
   private activatedRoute= inject(ActivatedRoute)
+  private readonly asideService = inject(AsideService);
   
-  ProfileData:ProfileUserData | null = null
+  
+  ProfileData:UserProfile | null = null
+  personalProfile! : ProfileUserData;
   birthDate:string|null = null;
   UserId!: string;
   userPosts!: UserPostsData[]
@@ -31,9 +37,11 @@ export class ProfileComponent implements OnInit{
   imgURL:string | ArrayBuffer | null | undefined;
   ToggleThePhotoPage:boolean = false;
   BookmarksData! : BookMarksData ;
-
+  isFollowed : boolean = false;
   activateTab : 'posts' | 'bookmarks'= 'posts';
   
+@ViewChild('FollwedBtn') followedBtn!: ElementRef<HTMLButtonElement>;
+
   @HostListener('document:click')
   onDocumentClick() {
     this.closePostOptionMenu();
@@ -78,7 +86,7 @@ export class ProfileComponent implements OnInit{
     this.profileService.getMyProfile().subscribe({
       next:(res)=>{
         if(res){
-          this.ProfileData = res.data.user;
+          this.personalProfile = res.data.user;
         }
       }
     })
@@ -90,6 +98,10 @@ export class ProfileComponent implements OnInit{
           console.log("The new person data",res.data.user)
           this.ProfileData = res.data.user;
           this.imgURL = res.data.user.photo;
+          if (res.data.isFollowing){
+            this.isFollowed = res.data.isFollowing;
+            console.log("is Following Value" , this.isFollowed)
+          }
         }
       }
     })
@@ -143,6 +155,23 @@ export class ProfileComponent implements OnInit{
     this.profileService.getAllTheBookmarks().subscribe({
       next:(res)=>{
         this.BookmarksData = res.data;
+      }
+    })
+  }
+
+  FollowOrUnfollow(id : string){
+    this.asideService.FollowAndUnfollow(id).subscribe({
+      next:(res)=>{
+        this.isFollowed = res.data.following
+        this.followedBtn.nativeElement.classList.add("followed")
+      }
+    })
+  }
+
+  BookmarkUnbookMark(post: Post){
+    this.postService.BookmarkUnbookMark(post._id).subscribe({
+      next:(res)=>{
+        post.bookmarked = res.data.bookmarked
       }
     })
   }
