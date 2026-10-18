@@ -24,4 +24,5 @@ export interface ProfileUserData {
   followersCount: number
   followingCount: number
   bookmarksCount: number
+  id:string
 }

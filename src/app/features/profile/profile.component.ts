@@ -27,7 +27,6 @@ export class ProfileComponent implements OnInit{
   
   
   ProfileData:UserProfile | null = null
-  personalProfile! : ProfileUserData;
   birthDate:string|null = null;
   UserId!: string;
   userPosts!: UserPostsData[]
@@ -86,7 +85,7 @@ export class ProfileComponent implements OnInit{
     this.profileService.getMyProfile().subscribe({
       next:(res)=>{
         if(res){
-          this.personalProfile = res.data.user;
+          this.ProfileData = res.data.user;
         }
       }
     })
